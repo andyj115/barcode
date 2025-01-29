@@ -25,8 +25,11 @@
       async function goBarcode(callBack) {
 
         // polyfill for some browsers
-        try { window['BarcodeDetector'].getSupportedFormats() }
-        catch { window['BarcodeDetector'] = barcodeDetectorPolyfill.BarcodeDetectorPolyfill }
+        try {
+          window['BarcodeDetector'].getSupportedFormats();
+        } catch {
+          window['BarcodeDetector'] = barcodeDetectorPolyfill.BarcodeDetectorPolyfill;
+        }
 
         // Define video as the video element. You can pass the element to the barcode detector.
         const video = document.querySelector('video');
@@ -39,7 +42,7 @@
         const barcodeDetector = new BarcodeDetector();
 
         // Let's scan barcodes forever
-        while (true) {
+        while(true) {
           try {
             // Try to detect barcodes in the current video frame.
             let barcodes = await barcodeDetector.detect(video);
@@ -64,8 +67,8 @@
             await new Promise(r => setTimeout(r, 1000));
           }
           catch {
-            //Wait till video is ready
-            //barcodeDetector.detect(video) might fail the first time
+            // Wait till video is ready
+            // barcodeDetector.detect(video) might fail the first time
             await new Promise(r => setTimeout(r, 200));
           }
         }
